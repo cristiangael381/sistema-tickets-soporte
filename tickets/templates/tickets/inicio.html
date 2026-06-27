@@ -1,0 +1,67 @@
+{% extends 'tickets/base.html' %}
+
+{% block contenido %}
+
+<h2>Panel principal</h2>
+
+<div class="card">
+    <h3>{{ total_tickets }}</h3>
+    <p>Total de tickets</p>
+</div>
+
+<div class="card">
+    <h3>{{ abiertos }}</h3>
+    <p>Abiertos</p>
+</div>
+
+<div class="card">
+    <h3>{{ en_proceso }}</h3>
+    <p>En proceso</p>
+</div>
+
+<div class="card">
+    <h3>{{ resueltos }}</h3>
+    <p>Resueltos</p>
+</div>
+
+<br><br>
+
+<a class="btn btn-verde" href="{% url 'crear_ticket' %}">Crear nuevo ticket</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Usuario</th>
+            <th>Área</th>
+            <th>Prioridad</th>
+            <th>Estado</th>
+            <th>Fecha</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for ticket in tickets %}
+        <tr>
+            <td>{{ ticket.id }}</td>
+            <td>{{ ticket.titulo }}</td>
+            <td>{{ ticket.nombre_usuario }}</td>
+            <td>{{ ticket.area }}</td>
+            <td>{{ ticket.prioridad }}</td>
+            <td>{{ ticket.estado }}</td>
+            <td>{{ ticket.fecha_creacion|date:"d/m/Y H:i" }}</td>
+            <td>
+                <a class="btn" href="{% url 'detalle_ticket' ticket.id %}">Ver</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="8">No hay tickets registrados.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

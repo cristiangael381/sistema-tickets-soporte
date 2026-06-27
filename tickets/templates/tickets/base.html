@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Tickets</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+        }
+
+        header {
+            background: #1f2937;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            background: #111827;
+            padding: 12px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 90%;
+            margin: 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-verde {
+            background: #16a34a;
+        }
+
+        .btn-gris {
+            background: #6b7280;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th {
+            background: #374151;
+            color: white;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .card {
+            display: inline-block;
+            width: 22%;
+            padding: 15px;
+            margin: 10px;
+            background: #e5e7eb;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Sistema de Tickets de Soporte</h1>
+    <p>Registro y seguimiento de reportes técnicos</p>
+</header>
+
+<nav>
+    <a href="{% url 'inicio' %}">Inicio</a>
+    <a href="{% url 'crear_ticket' %}">Nuevo Ticket</a>
+    <a href="/admin/">Administrador</a>
+</nav>
+
+<div class="container">
+    {% block contenido %}
+    {% endblock %}
+</div>
+
+</body>
+</html>
