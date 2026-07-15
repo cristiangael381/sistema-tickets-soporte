@@ -3,13 +3,24 @@ from .models import Ticket
 from .forms import TicketForm, ActualizarTicketForm
 
 
+
 def inicio(request):
+    estado = request.GET.get('estado')
+    prioridad = request.GET.get('prioridad')
+
     tickets = Ticket.objects.all().order_by('-fecha_creacion')
 
-    total_tickets = tickets.count()
-    abiertos = tickets.filter(estado='Abierto').count()
-    en_proceso = tickets.filter(estado='En proceso').count()
-    resueltos = tickets.filter(estado='Resuelto').count()
+    if estado:
+        tickets = tickets.filter(estado=estado)
+
+    if prioridad:
+        tickets = tickets.filter(prioridad=prioridad)
+
+    total_tickets = Ticket.objects.count()
+    abiertos = Ticket.objects.filter(estado='Abierto').count()
+    en_proceso = Ticket.objects.filter(estado='En proceso').count()
+    resueltos = Ticket.objects.filter(estado='Resuelto').count()
+    cerrados = Ticket.objects.filter(estado='Cerrado').count()
 
     return render(request, 'tickets/inicio.html', {
         'tickets': tickets,
@@ -17,8 +28,10 @@ def inicio(request):
         'abiertos': abiertos,
         'en_proceso': en_proceso,
         'resueltos': resueltos,
+        'cerrados': cerrados,
+        'estado_seleccionado': estado,
+        'prioridad_seleccionada': prioridad,
     })
-
 
 def crear_ticket(request):
     if request.method == 'POST':

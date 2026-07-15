@@ -24,7 +24,38 @@
     <p>Resueltos</p>
 </div>
 
+<div class="card">
+    <h3>{{ cerrados }}</h3>
+    <p>Cerrados</p>
+</div>
+
 <br><br>
+
+<h3>Filtrar tickets</h3>
+
+<form method="GET">
+    <label>Estado:</label>
+    <select name="estado" class="form-control">
+        <option value="">Todos</option>
+        <option value="Abierto" {% if estado_seleccionado == 'Abierto' %}selected{% endif %}>Abierto</option>
+        <option value="En proceso" {% if estado_seleccionado == 'En proceso' %}selected{% endif %}>En proceso</option>
+        <option value="Resuelto" {% if estado_seleccionado == 'Resuelto' %}selected{% endif %}>Resuelto</option>
+        <option value="Cerrado" {% if estado_seleccionado == 'Cerrado' %}selected{% endif %}>Cerrado</option>
+    </select>
+
+    <label>Prioridad:</label>
+    <select name="prioridad" class="form-control">
+        <option value="">Todas</option>
+        <option value="Baja" {% if prioridad_seleccionada == 'Baja' %}selected{% endif %}>Baja</option>
+        <option value="Media" {% if prioridad_seleccionada == 'Media' %}selected{% endif %}>Media</option>
+        <option value="Alta" {% if prioridad_seleccionada == 'Alta' %}selected{% endif %}>Alta</option>
+    </select>
+
+    <button class="btn" type="submit">Aplicar filtros</button>
+    <a class="btn btn-gris" href="{% url 'inicio' %}">Limpiar filtros</a>
+</form>
+
+<br>
 
 <a class="btn btn-verde" href="{% url 'crear_ticket' %}">Crear nuevo ticket</a>
 
@@ -58,7 +89,7 @@
         </tr>
         {% empty %}
         <tr>
-            <td colspan="8">No hay tickets registrados.</td>
+            <td colspan="8">No hay tickets registrados con esos filtros.</td>
         </tr>
         {% endfor %}
     </tbody>
