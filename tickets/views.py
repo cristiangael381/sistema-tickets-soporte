@@ -7,6 +7,7 @@ from .forms import TicketForm, ActualizarTicketForm
 def inicio(request):
     estado = request.GET.get('estado')
     prioridad = request.GET.get('prioridad')
+    buscar = request.GET.get('buscar')
 
     tickets = Ticket.objects.all().order_by('-fecha_creacion')
 
@@ -15,6 +16,17 @@ def inicio(request):
 
     if prioridad:
         tickets = tickets.filter(prioridad=prioridad)
+
+    if buscar:
+        tickets = tickets.filter(
+            titulo__icontains=buscar
+        ) | Ticket.objects.filter(
+            nombre_usuario__icontains=buscar
+        ) | Ticket.objects.filter(
+            area__icontains=buscar
+        ) | Ticket.objects.filter(
+            tecnico_asignado__icontains=buscar
+        )
 
     total_tickets = Ticket.objects.count()
     abiertos = Ticket.objects.filter(estado='Abierto').count()
@@ -31,6 +43,7 @@ def inicio(request):
         'cerrados': cerrados,
         'estado_seleccionado': estado,
         'prioridad_seleccionada': prioridad,
+        'buscar': buscar,
     })
 
 def crear_ticket(request):

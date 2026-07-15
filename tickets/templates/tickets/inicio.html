@@ -34,6 +34,14 @@
 <h3>Filtrar tickets</h3>
 
 <form method="GET">
+    <label>Buscar ticket:</label>
+    <input 
+        type="text" 
+        name="buscar" 
+        class="form-control" 
+        placeholder="Buscar por título, usuario, área o técnico"
+        value="{{ buscar|default:'' }}"
+    >
     <label>Estado:</label>
     <select name="estado" class="form-control">
         <option value="">Todos</option>
