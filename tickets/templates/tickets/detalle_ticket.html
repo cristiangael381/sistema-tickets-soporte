@@ -16,8 +16,12 @@
 <p><strong>Última actualización:</strong> {{ ticket.fecha_actualizacion|date:"d/m/Y H:i" }}</p>
 
 <br>
-
 <a class="btn" href="{% url 'editar_ticket' ticket.id %}">Actualizar ticket</a>
+
+{% if ticket.estado != 'Cerrado' %}
+    <a class="btn btn-verde" href="{% url 'cerrar_ticket' ticket.id %}">Cerrar ticket</a>
+{% endif %}
+
 <a class="btn btn-gris" href="{% url 'inicio' %}">Regresar</a>
 
 {% endblock %}

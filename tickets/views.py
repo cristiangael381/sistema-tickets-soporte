@@ -72,3 +72,9 @@ def editar_ticket(request, id):
         'form': form,
         'ticket': ticket
     })
+
+def cerrar_ticket(request, id):
+    ticket = get_object_or_404(Ticket, id=id)
+    ticket.estado = 'Cerrado'
+    ticket.save()
+    return redirect('detalle_ticket', id=ticket.id)
