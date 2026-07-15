@@ -106,12 +106,13 @@
     <p>Registro y seguimiento de reportes técnicos</p>
 </header>
 
+
 <nav>
     <a href="{% url 'inicio' %}">Inicio</a>
     <a href="{% url 'crear_ticket' %}">Nuevo Ticket</a>
+    <a href="{% url 'reporte_tickets' %}">Reportes</a>
     <a href="/admin/">Administrador</a>
 </nav>
-
 <div class="container">
     {% block contenido %}
     {% endblock %}

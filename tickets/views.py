@@ -91,3 +91,28 @@ def cerrar_ticket(request, id):
     ticket.estado = 'Cerrado'
     ticket.save()
     return redirect('detalle_ticket', id=ticket.id)
+
+def reporte_tickets(request):
+    total = Ticket.objects.count()
+    abiertos = Ticket.objects.filter(estado='Abierto').count()
+    en_proceso = Ticket.objects.filter(estado='En proceso').count()
+    resueltos = Ticket.objects.filter(estado='Resuelto').count()
+    cerrados = Ticket.objects.filter(estado='Cerrado').count()
+
+    prioridad_alta = Ticket.objects.filter(prioridad='Alta').count()
+    prioridad_media = Ticket.objects.filter(prioridad='Media').count()
+    prioridad_baja = Ticket.objects.filter(prioridad='Baja').count()
+
+    return render(request, 'tickets/reporte_tickets.html', {
+        'total': total,
+        'abiertos': abiertos,
+        'en_proceso': en_proceso,
+        'resueltos': resueltos,
+        'cerrados': cerrados,
+        'prioridad_alta': prioridad_alta,
+        'prioridad_media': prioridad_media,
+        'prioridad_baja': prioridad_baja,
+    })
+
+
+

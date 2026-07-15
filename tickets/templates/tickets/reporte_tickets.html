@@ -1,0 +1,66 @@
+{% extends 'tickets/base.html' %}
+
+{% block contenido %}
+
+<h2>Reporte general de tickets</h2>
+
+<p>Resumen del estado actual de los tickets registrados en el sistema.</p>
+
+<div class="card">
+    <h3>{{ total }}</h3>
+    <p>Total de tickets</p>
+</div>
+
+<div class="card">
+    <h3>{{ abiertos }}</h3>
+    <p>Abiertos</p>
+</div>
+
+<div class="card">
+    <h3>{{ en_proceso }}</h3>
+    <p>En proceso</p>
+</div>
+
+<div class="card">
+    <h3>{{ resueltos }}</h3>
+    <p>Resueltos</p>
+</div>
+
+<div class="card">
+    <h3>{{ cerrados }}</h3>
+    <p>Cerrados</p>
+</div>
+
+<br><br>
+
+<h3>Tickets por prioridad</h3>
+
+<table>
+    <thead>
+        <tr>
+            <th>Prioridad</th>
+            <th>Cantidad de tickets</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>Alta</td>
+            <td>{{ prioridad_alta }}</td>
+        </tr>
+        <tr>
+            <td>Media</td>
+            <td>{{ prioridad_media }}</td>
+        </tr>
+        <tr>
+            <td>Baja</td>
+            <td>{{ prioridad_baja }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<a class="btn btn-gris" href="{% url 'inicio' %}">Regresar al inicio</a>
+
+{% endblock %}
