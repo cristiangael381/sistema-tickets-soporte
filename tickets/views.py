@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from .models import Ticket
 from .forms import TicketForm, ActualizarTicketForm
-
 
 
 def inicio(request):
@@ -46,12 +46,14 @@ def inicio(request):
         'buscar': buscar,
     })
 
+
 def crear_ticket(request):
     if request.method == 'POST':
         form = TicketForm(request.POST)
 
         if form.is_valid():
             form.save()
+            messages.success(request, 'El ticket fue creado correctamente.')
             return redirect('inicio')
     else:
         form = TicketForm()
@@ -77,6 +79,7 @@ def editar_ticket(request, id):
 
         if form.is_valid():
             form.save()
+            messages.success(request, 'El ticket fue actualizado correctamente.')
             return redirect('detalle_ticket', id=ticket.id)
     else:
         form = ActualizarTicketForm(instance=ticket)
@@ -86,11 +89,14 @@ def editar_ticket(request, id):
         'ticket': ticket
     })
 
+
 def cerrar_ticket(request, id):
     ticket = get_object_or_404(Ticket, id=id)
     ticket.estado = 'Cerrado'
     ticket.save()
+    messages.success(request, 'El ticket fue cerrado correctamente.')
     return redirect('detalle_ticket', id=ticket.id)
+
 
 def reporte_tickets(request):
     total = Ticket.objects.count()
@@ -113,6 +119,5 @@ def reporte_tickets(request):
         'prioridad_media': prioridad_media,
         'prioridad_baja': prioridad_baja,
     })
-
 
 
