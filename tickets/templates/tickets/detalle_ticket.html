@@ -1,6 +1,7 @@
 {% extends 'tickets/base.html' %}
 
 {% block contenido %}
+<div class="detalle-box">
 
 <h2>Detalle del ticket #{{ ticket.id }}</h2>
 
@@ -50,4 +51,5 @@
 {% endif %}
 <a class="btn btn-gris" href="{% url 'inicio' %}">Regresar</a>
 
+</div>
 {% endblock %}

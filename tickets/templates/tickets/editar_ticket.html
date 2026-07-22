@@ -2,18 +2,22 @@
 
 {% block contenido %}
 
-<h2>Actualizar ticket #{{ ticket.id }}</h2>
+<div class="form-box">
+    <h2 class="titulo-formulario">Actualizar ticket #{{ ticket.id }}</h2>
 
-<p><strong>Problema:</strong> {{ ticket.titulo }}</p>
-<p><strong>Usuario:</strong> {{ ticket.nombre_usuario }}</p>
+    <p><strong>Problema:</strong> {{ ticket.titulo }}</p>
+    <p><strong>Usuario:</strong> {{ ticket.nombre_usuario }}</p>
 
-<form method="POST">
-    {% csrf_token %}
+    <form method="POST">
+        {% csrf_token %}
 
-    {{ form.as_p }}
+        {{ form.as_p }}
 
-    <button class="btn btn-verde" type="submit">Guardar cambios</button>
-    <a class="btn btn-gris" href="{% url 'detalle_ticket' ticket.id %}">Cancelar</a>
-</form>
+        <div class="acciones-formulario">
+            <button class="btn btn-verde" type="submit">Guardar cambios</button>
+            <a class="btn btn-gris" href="{% url 'detalle_ticket' ticket.id %}">Cancelar</a>
+        </div>
+    </form>
+</div>
 
 {% endblock %}

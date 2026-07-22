@@ -2,15 +2,19 @@
 
 {% block contenido %}
 
-<h2>Crear nuevo ticket</h2>
+<div class="form-box">
+    <h2 class="titulo-formulario">Crear nuevo ticket</h2>
 
-<form method="POST">
-    {% csrf_token %}
+    <form method="POST">
+        {% csrf_token %}
 
-    {{ form.as_p }}
+        {{ form.as_p }}
 
-    <button class="btn btn-verde" type="submit">Guardar ticket</button>
-    <a class="btn btn-gris" href="{% url 'inicio' %}">Cancelar</a>
-</form>
+        <div class="acciones-formulario">
+            <button class="btn btn-verde" type="submit">Guardar ticket</button>
+            <a class="btn btn-gris" href="{% url 'inicio' %}">Cancelar</a>
+        </div>
+    </form>
+</div>
 
 {% endblock %}
