@@ -8,8 +8,29 @@
 <p><strong>Usuario:</strong> {{ ticket.nombre_usuario }}</p>
 <p><strong>Área:</strong> {{ ticket.area }}</p>
 <p><strong>Descripción:</strong> {{ ticket.descripcion }}</p>
-<p><strong>Prioridad:</strong> {{ ticket.prioridad }}</p>
-<p><strong>Estado:</strong> {{ ticket.estado }}</p>
+<p>
+    <strong>Prioridad:</strong>
+    {% if ticket.prioridad == 'Alta' %}
+        <span class="badge prioridad-alta">Alta</span>
+    {% elif ticket.prioridad == 'Media' %}
+        <span class="badge prioridad-media">Media</span>
+    {% else %}
+        <span class="badge prioridad-baja">Baja</span>
+    {% endif %}
+</p>
+
+<p>
+    <strong>Estado:</strong>
+    {% if ticket.estado == 'Abierto' %}
+        <span class="badge estado-abierto">Abierto</span>
+    {% elif ticket.estado == 'En proceso' %}
+        <span class="badge estado-proceso">En proceso</span>
+    {% elif ticket.estado == 'Resuelto' %}
+        <span class="badge estado-resuelto">Resuelto</span>
+    {% else %}
+        <span class="badge estado-cerrado">Cerrado</span>
+    {% endif %}
+</p>
 <p><strong>Técnico asignado:</strong> {{ ticket.tecnico_asignado }}</p>
 <p><strong>Comentario:</strong> {{ ticket.comentario }}</p>
 <p><strong>Fecha de creación:</strong> {{ ticket.fecha_creacion|date:"d/m/Y H:i" }}</p>

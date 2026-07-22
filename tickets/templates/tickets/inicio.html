@@ -88,8 +88,27 @@
             <td>{{ ticket.titulo }}</td>
             <td>{{ ticket.nombre_usuario }}</td>
             <td>{{ ticket.area }}</td>
-            <td>{{ ticket.prioridad }}</td>
-            <td>{{ ticket.estado }}</td>
+            <td>
+    {% if ticket.prioridad == 'Alta' %}
+        <span class="badge prioridad-alta">Alta</span>
+    {% elif ticket.prioridad == 'Media' %}
+        <span class="badge prioridad-media">Media</span>
+    {% else %}
+        <span class="badge prioridad-baja">Baja</span>
+    {% endif %}
+</td>
+
+<td>
+    {% if ticket.estado == 'Abierto' %}
+        <span class="badge estado-abierto">Abierto</span>
+    {% elif ticket.estado == 'En proceso' %}
+        <span class="badge estado-proceso">En proceso</span>
+    {% elif ticket.estado == 'Resuelto' %}
+        <span class="badge estado-resuelto">Resuelto</span>
+    {% else %}
+        <span class="badge estado-cerrado">Cerrado</span>
+    {% endif %}
+</td>
             <td>{{ ticket.fecha_creacion|date:"d/m/Y H:i" }}</td>
             <td>
                 <a class="btn" href="{% url 'detalle_ticket' ticket.id %}">Ver</a>
