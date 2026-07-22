@@ -28,3 +28,21 @@ class Ticket(models.Model):
 
     def __str__(self):
         return f"{self.titulo} - {self.estado}"
+
+
+class RegistroMetrica(models.Model):
+    ACCIONES = [
+        ('Crear ticket', 'Crear ticket'),
+        ('Actualizar ticket', 'Actualizar ticket'),
+        ('Cerrar ticket', 'Cerrar ticket'),
+    ]
+
+    accion = models.CharField(max_length=50, choices=ACCIONES)
+    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)
+    tiempo_operacion_ms = models.IntegerField()
+    estado_resultante = models.CharField(max_length=50)
+    prioridad = models.CharField(max_length=50)
+    fecha_registro = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.accion} - Ticket #{self.ticket.id} - {self.tiempo_operacion_ms} ms"

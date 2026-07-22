@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .models import Ticket
+from .models import Ticket, RegistroMetrica
 from .forms import TicketForm, ActualizarTicketForm
+import time
 
 
 def inicio(request):
@@ -49,10 +50,22 @@ def inicio(request):
 
 def crear_ticket(request):
     if request.method == 'POST':
+        inicio_tiempo = time.time()
         form = TicketForm(request.POST)
 
         if form.is_valid():
-            form.save()
+            ticket = form.save()
+            fin_tiempo = time.time()
+            tiempo_ms = int((fin_tiempo - inicio_tiempo) * 1000)
+
+            RegistroMetrica.objects.create(
+                accion='Crear ticket',
+                ticket=ticket,
+                tiempo_operacion_ms=tiempo_ms,
+                estado_resultante=ticket.estado,
+                prioridad=ticket.prioridad
+            )
+
             messages.success(request, 'El ticket fue creado correctamente.')
             return redirect('inicio')
     else:
@@ -75,10 +88,22 @@ def editar_ticket(request, id):
     ticket = get_object_or_404(Ticket, id=id)
 
     if request.method == 'POST':
+        inicio_tiempo = time.time()
         form = ActualizarTicketForm(request.POST, instance=ticket)
 
         if form.is_valid():
-            form.save()
+            ticket = form.save()
+            fin_tiempo = time.time()
+            tiempo_ms = int((fin_tiempo - inicio_tiempo) * 1000)
+
+            RegistroMetrica.objects.create(
+                accion='Actualizar ticket',
+                ticket=ticket,
+                tiempo_operacion_ms=tiempo_ms,
+                estado_resultante=ticket.estado,
+                prioridad=ticket.prioridad
+            )
+
             messages.success(request, 'El ticket fue actualizado correctamente.')
             return redirect('detalle_ticket', id=ticket.id)
     else:
@@ -91,9 +116,23 @@ def editar_ticket(request, id):
 
 
 def cerrar_ticket(request, id):
+    inicio_tiempo = time.time()
     ticket = get_object_or_404(Ticket, id=id)
+
     ticket.estado = 'Cerrado'
     ticket.save()
+
+    fin_tiempo = time.time()
+    tiempo_ms = int((fin_tiempo - inicio_tiempo) * 1000)
+
+    RegistroMetrica.objects.create(
+        accion='Cerrar ticket',
+        ticket=ticket,
+        tiempo_operacion_ms=tiempo_ms,
+        estado_resultante=ticket.estado,
+        prioridad=ticket.prioridad
+    )
+
     messages.success(request, 'El ticket fue cerrado correctamente.')
     return redirect('detalle_ticket', id=ticket.id)
 
@@ -109,6 +148,8 @@ def reporte_tickets(request):
     prioridad_media = Ticket.objects.filter(prioridad='Media').count()
     prioridad_baja = Ticket.objects.filter(prioridad='Baja').count()
 
+    total_metricas = RegistroMetrica.objects.count()
+
     return render(request, 'tickets/reporte_tickets.html', {
         'total': total,
         'abiertos': abiertos,
@@ -118,6 +159,5 @@ def reporte_tickets(request):
         'prioridad_alta': prioridad_alta,
         'prioridad_media': prioridad_media,
         'prioridad_baja': prioridad_baja,
+        'total_metricas': total_metricas,
     })
-
-

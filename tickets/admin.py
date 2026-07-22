@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Ticket
+from .models import Ticket, RegistroMetrica
 
 
 @admin.register(Ticket)
@@ -26,4 +26,29 @@ class TicketAdmin(admin.ModelAdmin):
         'nombre_usuario',
         'area',
         'tecnico_asignado',
+    )
+
+
+@admin.register(RegistroMetrica)
+class RegistroMetricaAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'accion',
+        'ticket',
+        'tiempo_operacion_ms',
+        'estado_resultante',
+        'prioridad',
+        'fecha_registro',
+    )
+
+    list_filter = (
+        'accion',
+        'estado_resultante',
+        'prioridad',
+    )
+
+    search_fields = (
+        'accion',
+        'estado_resultante',
+        'prioridad',
     )
